@@ -5,7 +5,7 @@ conditions. Users scan a product's barcode, and the app combines the product's
 ingredients with the user's chronic conditions to tell them — with the help of generative
 AI — whether the product is suitable for them, along with a short explanation.
 
-> 🔌 Backend (ASP.NET Core API): **[FoodForHealthAPI](https://github.com/your-username/FoodForHealthAPI)**
+> 🔌 Backend (ASP.NET Core API): **[FoodForHealthAPI](https://github.com/YusufUguz/FoodForHealthAPI)**
 
 ---
 
@@ -86,7 +86,7 @@ have non-trivial state expose a Cubit with an explicit `state` class.
 ### Prerequisites
 
 - [Flutter SDK](https://docs.flutter.dev/get-started/install) (3.6 or newer)
-- A running instance of the [Food For Health API](https://github.com/your-username/FoodForHealthAPI)
+- A running instance of the [Food For Health API](https://github.com/YusufUguz/FoodForHealthAPI)
 - A [Google AI Studio](https://aistudio.google.com/app/apikey) API key for the Gemini features
 
 ### Configuration
