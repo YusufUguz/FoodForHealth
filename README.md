@@ -75,11 +75,9 @@ have non-trivial state expose a Cubit with an explicit `state` class.
 
 ## Screenshots
 
-> _Add a few screenshots or a short demo GIF here to showcase the UI._
-
-| Login | Barcode scan | AI evaluation | Profile |
-|-------|--------------|---------------|---------|
-|       |              |               |         |
+| Login | Register | Barcode scan | Chat with AI | Profile |
+|-------|----------|--------------|--------------|---------|
+| <img src="screenshots/login.png" width="160"/> | <img src="screenshots/register.png" width="160"/> | <img src="screenshots/barcode_scanning.png" width="160"/> | <img src="screenshots/chatwithai.png" width="160"/> | <img src="screenshots/profile.png" width="160"/> |
 
 ## Getting started
 
