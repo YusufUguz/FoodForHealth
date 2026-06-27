@@ -75,9 +75,13 @@ have non-trivial state expose a Cubit with an explicit `state` class.
 
 ## Screenshots
 
-| Login | Register | Barcode scan | Chat with AI | Profile |
-|-------|----------|--------------|--------------|---------|
-| <img src="screenshots/login.png" width="160"/> | <img src="screenshots/register.png" width="160"/> | <img src="screenshots/barcode_scanning.png" width="160"/> | <img src="screenshots/chatwithai.png" width="160"/> | <img src="screenshots/profile.png" width="160"/> |
+| Login | Register | Barcode scan | Profile |
+|-------|----------|--------------|---------|
+| <img src="screenshots/login.png" width="170"/> | <img src="screenshots/register.png" width="170"/> | <img src="screenshots/barcode_scanning.png" width="170"/> | <img src="screenshots/profile.png" width="170"/> |
+
+| Suitable product | Unsuitable product | Chat with AI |
+|------------------|--------------------|--------------|
+| <img src="screenshots/positive_evaluation.jpeg" width="170"/> | <img src="screenshots/negative_evaluation.jpeg" width="170"/> | <img src="screenshots/chatwithai.jpeg" width="170"/> |
 
 ## Getting started
 
