@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_for_health/core/constants/api_constants.dart';
 import 'package:food_for_health/core/models/user_info.dart';
+import 'package:food_for_health/core/services/api_service.dart';
 import 'package:food_for_health/features/profile/view_model/user_info_state.dart';
-import 'package:http/http.dart' as http;
 
 class UserInfoViewModel extends Cubit<UserInfoState> {
   UserInfoViewModel(this.context) : super(UserInfoInitialState());
@@ -13,10 +13,9 @@ class UserInfoViewModel extends Cubit<UserInfoState> {
 
   Future<void> getUserInfos(int userID) async {
     emit(UserInfoLoadingState());
-    final apiURL = Uri.parse("${ApiConstants.apiBaseUrl}${ApiConstants.getuserinfo}?userID=$userID");
 
     try {
-      final response = await http.get(apiURL).timeout(Duration(minutes: 1));
+      final response = await ApiService.instance.get("${ApiConstants.getuserinfo}?userID=$userID");
       if (response.statusCode == 200) {
         emit(UserInfoLoadedState(userInfo: UserInfo.fromJson(jsonDecode(response.body))));
       } else {
@@ -34,14 +33,9 @@ class UserInfoViewModel extends Cubit<UserInfoState> {
   }
 
   Future<bool> createUserInfo(UserInfo userInfoModel) async {
-    final apiURL = Uri.parse("${ApiConstants.apiBaseUrl}${ApiConstants.createuserinfo}");
-
     try {
-      final response = await http.post(
-        apiURL,
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(userInfoModel.toJson()),
-      );
+      final response =
+          await ApiService.instance.post(ApiConstants.createuserinfo, userInfoModel.toJson());
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         return true;

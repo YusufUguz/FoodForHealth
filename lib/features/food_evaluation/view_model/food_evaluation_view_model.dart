@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_for_health/core/constants/api_constants.dart';
 import 'package:food_for_health/core/models/food.dart';
 import 'package:food_for_health/core/models/user_diseases.dart';
+import 'package:food_for_health/core/services/api_service.dart';
 import 'package:food_for_health/features/food_evaluation/view_model/food_evaluation_state.dart';
-import 'package:http/http.dart' as http;
 
 class FoodEvaluationViewModel extends Cubit<FoodEvaluationState> {
   FoodEvaluationViewModel(this.context) : super(FoodEvaluationInitialState());
@@ -16,10 +16,9 @@ class FoodEvaluationViewModel extends Cubit<FoodEvaluationState> {
   Future<void> getFoodByBarcode(String? barcode) async {
     emit(FoodEvaluationLoadingState());
 
-    final apiURL = Uri.parse("${ApiConstants.apiBaseUrl}${ApiConstants.getfoodbybarcode}?barcode=$barcode");
-
     try {
-      final response = await http.get(apiURL).timeout(Duration(minutes: 1));
+      final response =
+          await ApiService.instance.get("${ApiConstants.getfoodbybarcode}?barcode=$barcode");
       if (response.statusCode == 200) {
         emit(FoodEvaluationLoadedState(food: Food.fromJson(jsonDecode(response.body))));
       } else {
@@ -34,9 +33,8 @@ class FoodEvaluationViewModel extends Cubit<FoodEvaluationState> {
   }
 
   Future<List<UserDisease>> getUserDiseases(int userID) async {
-    final apiURL = Uri.parse("${ApiConstants.apiBaseUrl}${ApiConstants.getuserdiseases}?userID=$userID");
     try {
-      final response = await http.get(apiURL);
+      final response = await ApiService.instance.get("${ApiConstants.getuserdiseases}?userID=$userID");
 
       if (response.statusCode == 200) {
         final List<dynamic> jsonData = json.decode(response.body);

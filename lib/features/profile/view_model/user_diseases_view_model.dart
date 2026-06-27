@@ -5,18 +5,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:food_for_health/core/constants/api_constants.dart';
 import 'package:food_for_health/core/models/disease.dart';
 import 'package:food_for_health/core/models/user_diseases.dart';
+import 'package:food_for_health/core/services/api_service.dart';
 import 'package:food_for_health/features/profile/view_model/user_diseases_state.dart';
-import 'package:http/http.dart' as http;
 
 class UserDiseasesViewModel extends Cubit<UserDiseasesState> {
   UserDiseasesViewModel(this.context) : super(UserDiseasesInitialState());
   BuildContext context;
 
   Future<List<Disease>> getDiseases() async {
-    final apiURL = Uri.parse("${ApiConstants.apiBaseUrl}${ApiConstants.getdiseases}");
-
     try {
-      final response = await http.get(apiURL);
+      final response = await ApiService.instance.get(ApiConstants.getdiseases);
 
       if (response.statusCode == 200) {
         List<dynamic> jsonResponse = jsonDecode(response.body);
@@ -32,10 +30,9 @@ class UserDiseasesViewModel extends Cubit<UserDiseasesState> {
 
   Future<void> getUserDiseases(int userID) async {
     emit(UserDiseasesLoadingState());
-    final apiURL = Uri.parse("${ApiConstants.apiBaseUrl}${ApiConstants.getuserdiseases}?userID=$userID");
 
     try {
-      final response = await http.get(apiURL).timeout(Duration(minutes: 1));
+      final response = await ApiService.instance.get("${ApiConstants.getuserdiseases}?userID=$userID");
       if (response.statusCode == 200) {
         List<dynamic> jsonResponse = jsonDecode(response.body);
         List<UserDisease> diseases = jsonResponse.map((disease) => UserDisease.fromJson(disease)).toList();
@@ -56,11 +53,9 @@ class UserDiseasesViewModel extends Cubit<UserDiseasesState> {
   }
 
   Future<bool> createUserDisease(UserDisease userDisease) async {
-    var apiURL = Uri.parse("${ApiConstants.apiBaseUrl}${ApiConstants.createuserdisease}");
-
     try {
-      final response = await http.post(apiURL,
-          headers: {"Content-Type": "application/json"}, body: jsonEncode((userDisease.toJson())));
+      final response =
+          await ApiService.instance.post(ApiConstants.createuserdisease, userDisease.toJson());
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         return true;
@@ -75,12 +70,8 @@ class UserDiseasesViewModel extends Cubit<UserDiseasesState> {
   }
 
   Future<bool> deleteUserDisease(int id) async {
-    var apiURL = Uri.parse("${ApiConstants.apiBaseUrl}${ApiConstants.deleteuserdisease}?ID=$id");
-
     try {
-      final response = await http.delete(
-        apiURL,
-      );
+      final response = await ApiService.instance.delete("${ApiConstants.deleteuserdisease}?ID=$id");
 
       if (response.statusCode == 200) {
         return true;

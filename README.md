@@ -58,6 +58,21 @@ lib/
 Each feature keeps its UI (`view`) separate from its logic (`view_model`), and screens that
 have non-trivial state expose a Cubit with an explicit `state` class.
 
+## Engineering highlights
+
+- **Feature-first structure** — each screen is a self-contained feature with its own view,
+  view-model and state, which keeps the codebase easy to navigate and extend.
+- **Single networking layer** — all REST calls go through one `ApiService` (`core/services`)
+  that centralizes the base URL, JSON headers, the JWT bearer token and a shared timeout, so
+  feature view-models stay focused on their own logic instead of repeating HTTP wiring.
+- **Reusable widgets** — shared UI pieces (text fields, validators, buttons, cards, alerts)
+  live in `core/general_widgets` and are composed across features to avoid duplication.
+- **Predictable state** — Cubits emit explicit loading / loaded / error states, giving the UI
+  a single source of truth to react to.
+- **Secure session handling** — the JWT and cached user are stored with
+  `flutter_secure_storage`, and the token is attached automatically to every authenticated
+  request.
+
 ## Screenshots
 
 > _Add a few screenshots or a short demo GIF here to showcase the UI._
